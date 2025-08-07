@@ -24,7 +24,7 @@ async function callGemini(req, res) {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "X-goog-api-key": process.env.GOOGLE_API
+                "X-goog-api-key": "AIzaSyA1dEOfE41n0F0bVNkgY3Pw692Rxv_sOH0"
             },
             body: JSON.stringify(body)
         })
