@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat with Nova</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #075e54, #128c7e);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .chat-container {
+            width: 100%;
+            max-width: 900px;
+            height: 95vh;
+            background: #f0f2f5;
+            display: flex;
+            flex-direction: column;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Header Styles */
+        .chat-header {
+            background: #128C7E;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            color: white;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #7c4dff, #ff4081);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+            margin-right: 15px;
+        }
+
+        .contact-info {
+            flex: 1;
+        }
+
+        .contact-name {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .contact-status {
+            font-size: 13px;
+            opacity: 0.9;
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .header-icons i {
+            font-size: 20px;
+            cursor: pointer;
+            opacity: 0.9;
+            transition: opacity 0.2s;
+        }
+
+        .header-icons i:hover {
+            opacity: 1;
+        }
+
+        /* Messages Area */
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" opacity="0.05"><rect width="100" height="100" fill="none" stroke="%23000" stroke-width="2"/></svg>');
+            background-size: 40px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .message {
+            max-width: 65%;
+            padding: 12px 15px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            position: relative;
+            animation: fadeIn 0.3s ease;
+            word-wrap: break-word;
+            line-height: 1.4;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .received {
+            background: white;
+            align-self: flex-start;
+            border-top-left-radius: 0;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .sent {
+            background: #dcf8c6;
+            align-self: flex-end;
+            border-top-right-radius: 0;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .message-time {
+            font-size: 11px;
+            color: rgba(0, 0, 0, 0.45);
+            text-align: right;
+            margin-top: 5px;
+        }
+
+        /* Input Area */
+        .chat-input {
+            background: #f0f2f5;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
+        }
+
+        .input-container {
+            flex: 1;
+            background: white;
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            padding: 0 15px;
+        }
+
+        .input-container i {
+            color: #54656f;
+            font-size: 22px;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .input-container i:hover {
+            color: #128C7E;
+        }
+
+        .message-input {
+            flex: 1;
+            border: none;
+            outline: none;
+            padding: 12px 15px;
+            font-size: 16px;
+            background: transparent;
+        }
+
+        .send-button {
+            background: #128C7E;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .send-button:hover {
+            background: #0e7a6d;
+        }
+
+        .send-button i {
+            font-size: 22px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .chat-container {
+                height: 100vh;
+                border-radius: 0;
+            }
+
+            .message {
+                max-width: 80%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="chat-container">
+        <!-- Chat Header -->
+        <div class="chat-header">
+            <div class="avatar">N</div>
+            <div class="contact-info">
+                <div class="contact-name">Nova</div>
+                <div class="contact-status">online • last seen today at 12:30 PM</div>
+            </div>
+            <div class="header-icons">
+                <i class="fas fa-search"></i>
+                <i class="fas fa-paperclip"></i>
+                <i class="fas fa-ellipsis-v"></i>
+            </div>
+        </div>
+
+        <!-- Messages Area -->
+        <div class="chat-messages" id="messagesContainer">
+            <!-- Messages will be dynamically added here -->
+        </div>
+
+        <!-- Input Area -->
+        <div class="chat-input">
+            <div class="input-container">
+                <i class="far fa-smile"></i>
+                <input type="text" class="message-input" id="messageInput" placeholder="Type a message..."
+                    autocomplete="off">
+                <i class="fas fa-microphone"></i>
+            </div>
+            <button class="send-button" id="sendButton">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        
+        const messagesContainer = document.getElementById('messagesContainer');
+        const messageInput = document.getElementById('messageInput');
+        const microphone = document.getElementsByClassName("fa-microphone")[0];
+        const sendButton = document.getElementById('sendButton');
+
+        function displayMessage(text, sender, time) {
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message', sender);
+
+            messageElement.innerHTML = `
+                <div class="message-text">${text}</div>
+                <div class="message-time">${time}</div>
+            `;
+
+            messagesContainer.appendChild(messageElement);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function getCurrentTime() {
+            const now = new Date();
+            return now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        }
+
+        async function sendMessage() {
+            const messageText = messageInput.value.trim();
+
+            if (messageText) {
+                displayMessage(messageText, 'sent', getCurrentTime());
+                messageInput.value = '';
+                const reply = await callGemini(messageText);
+                displayMessage(reply, 'received', getCurrentTime());
+            }
+        }
+
+        sendButton.addEventListener('click', sendMessage);
+
+        messageInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        window.onload = () => {
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        };
+
+
+        const SpeechRecognition = window.speechRecognition || window.webkitSpeechRecognition;
+
+        if (!SpeechRecognition) {
+            console.log("Speech recognition not suppported!");
+        }
+        const r = new SpeechRecognition()
+        r.continuous = false;
+        r.interimResults = false;
+        r.maxAlternatives = 1;
+
+        r.addEventListener("start", () => {
+            console.log("Speech is recognized!")
+        })
+        r.addEventListener("result", (e) => {
+            const transcript = e.results[0][0].transcript;
+            console.log(transcript);
+            callGemini(transcript);
+        })
+        let microState = false;
+
+        microphone.addEventListener("click", ()=> {
+            if (!microState) {
+                r.start();
+            } else {
+                r.stop();
+            }
+        });
+        
+
+        async function callGemini(text) {
+            try {
+                const res = await fetch("/info", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ text })
+                });
+
+                if (res.ok) {
+                    const data = await res.json();
+                    
+                    <!-- createVoice(data.url); -->
+                    console.log(data.reply)
+                    console.log("It is ok")
+                    return data.reply;
+                } else {
+                    console.log("Some error occured!");
+                }
+            } catch (err) {
+                console.log("Error:", err);
+            }
+        }
+
+        /*function createChat(reply) {
+            const container = document.getElementById("chats");
+            let div = document.createElement('div');
+            div.innerText = reply;
+            container.append(div)
+        }
+
+        async function createVoice(text) {
+            let voice = document.getElementById("voice");
+            voice.innerHTML =
+                `<audio controls autoplay>
+                <source src="data:audio/mpeg;base64,${text}" type="audio/mpeg">
+            </audio>`
+        }*/
+
+    </script>
+</body>
+
+</html>

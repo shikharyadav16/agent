@@ -1,0 +1,19 @@
+{
+  "name": "ai",
+  "version": "1.0.0",
+  "description": "An AI agent",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "author": "Shikhar",
+  "license": "ISC",
+  "dependencies": {
+    "@google-cloud/text-to-speech": "^6.2.0",
+    "dotenv": "^17.2.1",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "mongoose": "^8.17.0",
+    "node-fetch": "^3.3.2"
+  }
+}
