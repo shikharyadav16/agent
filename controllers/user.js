@@ -1,15 +1,19 @@
 const User = require("../models/User");
+const { setUser } = require("../services/auth");
 
 async function handlePostLogin(req, res) {
     const { username, password } = req.body;
 
     try {
-        const user = await User.findOne({username, password});
+        const user = await User.findOne({ username, password });
 
         if (!user) {
-            return res.status(404).json({msg: "User not found!"});
+            return res.status(404).json({ msg: "Invalid credentials!" });
         }
-        return res.json({redirected: "/"});
+        const token = setUser(user);
+        res.cookie("uid", token);
+
+        return res.json({ redirected: "/" });
 
     } catch (err) {
         console.log("Error:", err);
@@ -20,18 +24,21 @@ async function handlePostSignup(req, res) {
     const { username, password } = req.body;
 
     try {
-        const user = await User.findOne({username});
+        const user = await User.findOne({ username });
 
         if (user) {
-            return res.json({msg: "User already exists!"})
+            return res.json({ msg: "User already exists!" })
         }
 
-        await User.create({
+        const newUser = await User.create({
             username: username,
             password: password
         });
 
-        return res.status(404).json({redirected: "/"});
+        const token = setUser(newUser);
+        res.cookie("uid", token);
+
+        return res.status(201).json({ redirectedTo: "/" });
 
     } catch (err) {
         console.log("Error:", err);

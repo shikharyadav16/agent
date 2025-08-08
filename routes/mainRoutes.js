@@ -1,11 +1,9 @@
 const express = require("express");
-const { callGemini } = require("../controllers/main");
+const { callGemini, handleGetChats, handleGetContactChats } = require("../controllers/main");
 const router = express.Router();
 
-router.get("/", (req, res)=> {
-    res.render("index.ejs");
-});
-
+router.get("/", handleGetChats);
 router.post("/info", callGemini);
+router.post("/contact", handleGetContactChats);
 
 module.exports = router;

@@ -6,8 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat Application</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap">
-
     <style>
         * {
             margin: 0;
@@ -23,7 +21,6 @@
             justify-content: center;
             align-items: center;
             color: #333;
-            overflow: hidden;
         }
 
         .chat-app {
@@ -153,7 +150,6 @@
             flex: 1;
             display: flex;
             flex-direction: column;
-
         }
 
         .chat-header {
@@ -208,14 +204,9 @@
             flex: 1;
             padding: 20px;
             overflow-y: auto;
-            background-color: #fff4fe;
+            background-color: #f9f9ff;
             display: flex;
             flex-direction: column;
-            background: url('https://img.freepik.com/free-vector/vector-valentines-day-seamless-pink-background-with-heart-shape-pattern-horizontally-repeatable_8130-1838.jpg?semt=ais_hybrid&w=740&q=80');
-            ;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
         }
 
         .message {
@@ -240,18 +231,14 @@
         }
 
         .received {
-            font-family: "Nunito", sans-serif;
             align-self: flex-start;
-            background-color: #ffffff;
+            background-color: #e9ecef;
             border-bottom-left-radius: 5px;
-            box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
         }
 
         .sent {
-            font-family: "Nunito", sans-serif;
             align-self: flex-end;
-            background: linear-gradient(135deg, #d568bd 0%, #df51ff 100%);
-            box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
             color: white;
             border-bottom-right-radius: 5px;
         }
@@ -260,15 +247,11 @@
             font-size: 0.7rem;
             margin-top: 5px;
             text-align: right;
-            color: rgba(0, 0, 0, 0.634);
+            color: rgba(255, 255, 255, 0.8);
         }
 
         .received .message-time {
             color: #777;
-        }
-
-        .sent .message-time {
-            color: white;
         }
 
         .chat-input {
@@ -346,15 +329,6 @@
             z-index: 10;
         }
 
-        .contact-avatar img {
-            width: 100%;
-            border-radius: 100%;
-            height: 100%;
-            object-position: center;
-            object-fit: cover;
-            object-position: top center;
-        }
-
         /* Responsive Styles */
         @media (max-width: 768px) {
             .chat-app {
@@ -419,16 +393,11 @@
             .input-container {
                 padding: 5px 10px;
             }
-
-            .chat-input {
-                margin-bottom: 50px;
-            }
         }
     </style>
 </head>
 
 <body>
-
     <!-- Mobile Toggle Button -->
     <div class="mobile-toggle" id="mobileToggle">
         <i class="fas fa-bars"></i>
@@ -451,74 +420,23 @@
 
             <div class="contacts-list">
                 <!-- Contact 1 -->
-                <div class="contact active" data-name="nova">
-                    <div class="contact-avatar">N</div>
+                <div class="contact active">
+                    <div class="contact-avatar">A</div>
                     <div class="contact-info">
-                        <div class="contact-name">Nova</div>
-                        <div class="contact-preview">
-                            <% if (allChats) {%><%= allChats[(allChats.length)-1]?.chat.substring(0, 25); %>....<% } %>
-                        </div>
+                        <div class="contact-name">Alex Johnson</div>
+                        <div class="contact-preview">Looking forward to our ....</div>
                     </div>
                     <div class="contact-time">2:45 PM</div>
                 </div>
-                <!-- Contact 2 -->
-                <!-- <div class="contact" data-name="cristiano-ronaldo"> -->
-                    <!-- <div class="contact-avatar"><img -->
-                            <!-- src="https://hips.hearstapps.com/hmg-prod/images/cristiano-ronaldo-of-portugal-during-the-uefa-nations-news-photo-1748359673.pjpeg?crop=0.610xw:0.917xh;0.317xw,0.0829xh&resize=640:*" -->
-                            <!-- alt=""></div> -->
-                    <!-- <div class="contact-info"> -->
-                        <!-- <div class="contact-name">Cristiano Ronaldo</div> -->
-                        <!-- <div class="contact-preview"> -->
-                        <!-- </div> -->
-                    <!-- </div> -->
-                    <!-- <div class="contact-time">2:45 PM</div> -->
-                <!-- </div> -->
-                <!-- <!~~ Contact 3 ~~> -->
-                <!-- <div class="contact" data-name="tom-holland"> -->
-                    <!-- <div class="contact-avatar"><img -->
-                            <!-- src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJnTwDDHJj8WLO4tNt0mCN6EPMhfFiLePcFw&s" -->
-                            <!-- alt=""></div> -->
-                    <!-- <div class="contact-info"> -->
-                        <!-- <div class="contact-name">Tom Holland</div> -->
-                        <!-- <div class="contact-preview"> -->
-                        <!-- </div> -->
-                    <!-- </div> -->
-                    <!-- <div class="contact-time">2:45 PM</div> -->
-                <!-- </div> -->
-                <!-- <!~~ Contact 4 ~~> -->
-                <!-- <div class="contact" data-name="virat-kohli"> -->
-                    <!-- <div class="contact-avatar"><img -->
-                            <!-- src="https://upload.wikimedia.org/wikipedia/commons/9/9b/Virat_Kohli_in_PMO_New_Delhi.jpg" -->
-                            <!-- alt=""></div> -->
-                    <!-- <div class="contact-info"> -->
-                        <!-- <div class="contact-name">Virat Kohli</div> -->
-                        <!-- <div class="contact-preview"> -->
-                        <!-- </div> -->
-                    <!-- </div> -->
-                    <!-- <div class="contact-time">2:45 PM</div> -->
-                <!-- </div> -->
-                <!-- <!~~ Contact 5 ~~> -->
-                <!-- <div class="contact" data-name="elon-musk"> -->
-                    <!-- <div class="contact-avatar"><img -->
-                            <!-- src="https://upload.wikimedia.org/wikipedia/commons/f/f4/USAFA_Hosts_Elon_Musk_%28Image_1_of_17%29_%28cropped%29.jpg" -->
-                            <!-- alt=""></div> -->
-                    <!-- <div class="contact-info"> -->
-                        <!-- <div class="contact-name">Elon Musk</div> -->
-                        <!-- <div class="contact-preview"> -->
-                        <!-- </div> -->
-                    <!-- </div> -->
-                    <!-- <div class="contact-time">2:45 PM</div> -->
-                <!-- </div> -->
-
             </div>
         </aside>
 
         <!-- Chat Container -->
         <div class="chat-container">
             <div class="chat-header">
-                <div class="contact-avatar-main contact-avatar">N</div>
+                <div class="contact-avatar-main contact-avatar">A</div>
                 <div class="chat-header-info">
-                    <h3>Nova</h3>
+                    <h3>Alex Johnson</h3>
                     <div class="status">
                         <div class="status-dot"></div>
                         <span>Online</span>
@@ -538,26 +456,46 @@
                 </div>
 
                 <!-- Sent Message -->
-                <!-- <div class="message sent"> -->
-                    <!-- I'm doing great! Just finished the project proposal. -->
-                    <!-- <div class="message-time">10:32 AM</div> -->
-                <!-- </div> -->
+                <div class="message sent">
+                    I'm doing great! Just finished the project proposal.
+                    <div class="message-time">10:32 AM</div>
+                </div>
 
-                <% allChats.forEach(chat=> { %>
-                    <div class="message <%= chat.role.startsWith('BOT4') ? 'received' : 'sent' %>">
-                        <%= chat.chat %>
-                            <div class="message-time">
-                                <%= new Date(chat.createdAt).toLocaleTimeString([], {hour: '2-digit' , minute: '2-digit'
-                                    }) %>
-                            </div>
-                    </div>
-                    <% }) %>
+                <!-- Received Message -->
+                <div class="message received">
+                    That's awesome! Can you send it over for review?
+                    <div class="message-time">10:33 AM</div>
+                </div>
+
+                <!-- Sent Message -->
+                <div class="message sent">
+                    Sure, I'll email it to you right now. Let me know what you think.
+                    <div class="message-time">10:34 AM</div>
+                </div>
+
+                <!-- Received Message -->
+                <div class="message received">
+                    Will do. Also, don't forget about our meeting tomorrow at 10 AM.
+                    <div class="message-time">10:35 AM</div>
+                </div>
+
+                <!-- Sent Message -->
+                <div class="message sent">
+                    I've got it on my calendar. Looking forward to it!
+                    <div class="message-time">10:36 AM</div>
+                </div>
+
+                <!-- Received Message -->
+                <div class="message received">
+                    Great! I'll see you tomorrow then.
+                    <div class="message-time">10:37 AM</div>
+                </div>
             </div>
 
             <div class="chat-input">
                 <div class="input-container">
                     <i class="far fa-smile"></i>
-                    <input type="text" placeholder="Type a message..." id="chatInp">
+                    <input type="text" placeholder="Type a message...">
                     <div class="input-actions">
                         <i class="fas fa-camera"></i>
                     </div>
@@ -577,165 +515,49 @@
 
         // Close sidebar when clicking on a contact (mobile)
         document.querySelectorAll('.contact').forEach(contact => {
-            contact.addEventListener('click', function (e) {
-                /*document.querySelectorAll(".contact").forEach((c) => { c.classList.remove("active"); })
-                e.currentTarget.classList.add("active");*/
-
+            contact.addEventListener('click', function () {
                 if (window.innerWidth <= 768) {
                     document.getElementById('sidebar').classList.remove('active');
                 }
-                //handleGetContactChats(e.currentTarget.dataset.name)
             });
         });
-
-        /*async function handleGetContactChats(contact) {
-            try {
-                const res = await fetch("/contact", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({ contact })
-                });
-                const data = await res.json();
-
-                if (res.ok) {
-                    const chats = data.allChats;
-                    populateContactChats(chats, contact);
-                } else {
-                    console.log("Some error occured!");
-                }
-            } catch (err) {
-                console.log("Error:", err);
-            }
-        }
-
-        function populateContactChats(chats, contact) {
-            const chatContainer = document.getElementsByClassName("chat-messages")[0];
-            chatContainer.innerHTML = "";
-            
-            if (contact.toLowerCase() === "nova") {
-                document.querySelector(".chat-messages").style.backgroundImage = "url('https://img.freepik.com/free-vector/vector-valentines-day-seamless-pink-background-with-heart-shape-pattern-horizontally-repeatable_8130-1838.jpg?semt=ais_hybrid&w=740&q=80');"
-            } else {
-                chatContainer.style.backgroundImage = "url('https://static.vecteezy.com/ti/gratis-vector/p1/24220540-abstract-gemakkelijk-meetkundig-naadloos-patroon-met-goud-lijn-structuur-aan-wit-achtergrond-licht-modern-gemakkelijk-behang-helder-tegel-achtergrond-monochroom-grafisch-element-gratis-vector.jpg');"
-            }
-
-            chats.forEach(chat => {
-                const div = document.createElement("div");
-                div.classList.add("message");
-                if (chat.role.startsWith(contact)) {
-                    div.classList.add("received");
-                } else {
-                    div.classList.add("sent");
-                }
-                div.innerHTML = `${chat.chat}
-                            <div class="message-time">
-                                ${new Date(chat.createdAt).toLocaleTimeString([], {
-                    hour: '2-digit', minute: '2-digit'
-                })}
-                            </div>`
-                chatContainer.append(div);
-            });
-        }*/
-
 
         // Auto-scroll to bottom of chat messages
         const chatMessages = document.querySelector('.chat-messages');
         chatMessages.scrollTop = chatMessages.scrollHeight;
-
-        function chatMessage(msg, state) {
-            const chatContainer = document.getElementsByClassName("chat-messages")[0];
-
-            //time now
-            const now = new Date();
-
-            const options12 = { hour: '2-digit', minute: '2-digit', hour12: true };
-            const time12Hour = now.toLocaleTimeString([], options12);
-
-            let div = document.createElement("div");
-            div.innerHTML = `${msg}<div class="message-time">${time12Hour}</div>`
-            div.classList.add('message')
-            if (state === "sent") {
-                div.classList.add('sent')
-            } else {
-                div.classList.add('received')
-            }
-
-            chatContainer.append(div);
-        }
-        const chatInput = document.getElementById("chatInp");
-        const sendBtn = document.getElementsByClassName("send-button")[0];
-
-        // Function to send message
-        async function sendMessage() {
-            const input = chatInput.value;
-            chatInput.value = "";
-
-            if (input.trim() === "") {
-                return;
-            }
-
-            chatMessage(input, "sent");
-            scrollToBottom();
-            const reply = await callGemini(input);
-            chatMessage(reply, "received");
-            scrollToBottom();
-        }
-
-        // Click event
-        sendBtn.addEventListener("click", (e) => {
-            e.preventDefault();
-            sendMessage();
-        });
-
-        // Enter key event
-        chatInput.addEventListener("keydown", (e) => {
-            if (e.key === "Enter" && !e.shiftKey) { // Shift+Enter makes a new line
-                e.preventDefault(); // Prevents default new-line behavior
-                sendMessage();
-            }
-        });
-
-
-        function scrollToBottom() {
-            const chatBox = document.getElementsByClassName("chat-messages")[0];
-            chatBox.scrollTop = chatBox.scrollHeight;
-        }
-
-
     </script>
 
     <script>
 
-        /* const microphone = document.getElementsByClassName("fa-phone-alt")[0]
-         const SpeechRecognition = window.speechRecognition || window.webkitSpeechRecognition;
- 
-         if (!SpeechRecognition) {
-             console.log("Speech recognition not suppported!");
-         }
-         const r = new SpeechRecognition()
-         r.continuous = false;
-         r.interimResults = false;
-         r.maxAlternatives = 1;
- 
-         r.addEventListener("start", () => {
-             console.log("Speech is recognized!")
-         })
-         r.addEventListener("result", (e) => {
-             const transcript = e.results[0][0].transcript;
-             console.log(transcript);
-             callGemini(transcript);
-         })
-         let microState = false;
- 
-         microphone.addEventListener("click", () => {
-             if (!microState) {
-                 r.start();
-             } else {
-                 r.stop();
-             }
-         });
- */
+
+        const SpeechRecognition = window.speechRecognition || window.webkitSpeechRecognition;
+
+        if (!SpeechRecognition) {
+            console.log("Speech recognition not suppported!");
+        }
+        const r = new SpeechRecognition()
+        r.continuous = false;
+        r.interimResults = false;
+        r.maxAlternatives = 1;
+
+        r.addEventListener("start", () => {
+            console.log("Speech is recognized!")
+        })
+        r.addEventListener("result", (e) => {
+            const transcript = e.results[0][0].transcript;
+            console.log(transcript);
+            callGemini(transcript);
+        })
+        let microState = false;
+
+        microphone.addEventListener("click", () => {
+            if (!microState) {
+                r.start();
+            } else {
+                r.stop();
+            }
+        });
+
 
         async function callGemini(text) {
             try {
@@ -750,7 +572,9 @@
                 if (res.ok) {
                     const data = await res.json();
 
-                    //<!-- createVoice(data.url); -->
+                    <!-- createVoice(data.url); -->
+                    console.log(data.reply)
+                    console.log("It is ok")
                     return data.reply;
                 } else {
                     console.log("Some error occured!");
