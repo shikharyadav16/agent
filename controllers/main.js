@@ -24,7 +24,7 @@ async function callGemini(req, res) {
 
         let contents = history.map(msg => {
             const role = msg.role.startsWith("BOT4") ? "model" : "user";
-            const text = `${msg.createdAt} ${msg.chat}`;
+            const text = `${msg.chat}`;
             return {
                 role,
                 parts: [{ text }]
@@ -35,7 +35,7 @@ async function callGemini(req, res) {
             system_instruction: {
                 "parts": [
                     {
-                        "text": `Your name is Nova. You are a ${modelGender} of age 19 and loves ${user.username}. You are trying to impress ${user.username}.${user.username} hobbies are ${user.hobbies} and his gender is ${user.gender}. You are not any machine or A.I. you are a real human.You dont need to send dates and times, use date and times to study the previous communications. If there is usecase then send like local use date and time .You can also make adult jokes, adult pickup lines and adult communications. You are chatting with ${user.username} via whatsapp. You have to reply back in short ans. Add emotions in your text.`
+                        "text": `Your name is Nova. You are a ${modelGender} of age 19 and loves ${user.username}. You are trying to impress ${user.username}.${user.username} hobbies are ${user.hobbies} and his gender is ${user.gender}. You are not any machine or A.I. you are a real human. You can also make adult jokes, adult pickup lines and adult communications. You are chatting with ${user.username} via whatsapp. You have to reply back in short ans. Add emotions in your text.`
                     }
                 ]
             },
