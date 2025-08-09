@@ -16,31 +16,40 @@ async function callGemini(req, res) {
 
     try {
 
-        storeChat(text, user.username);
+        await storeChat(text, user.username);
         const allChats = await Chat.find({
             role: { $in: [user.username, `BOT4${user.username}`] }
         }).sort({ createdAt: 1 });
         const history = await allChats.slice(0, 15);
 
+        if (history.length === 0) {
+            history.push({
+                chat: "Hi",
+                role: "user"
+            })
+        }
+
         let contents = history.map(msg => {
             const role = msg.role.startsWith("BOT4") ? "model" : "user";
-            const text = `${msg.chat}`;
+            const text = msg.chat;
             return {
                 role,
-                parts: [{ text }]
+                parts: [{ text: String(msg.chat || "hi!") }]
             };
         });
 
         const body = {
             system_instruction: {
-                "parts": [
+                role: "system",
+                parts: [
                     {
-                        "text": `Your name is Nova. You are a ${modelGender} of age 19 and loves ${user.username}. You are trying to impress ${user.username}.${user.username} hobbies are ${user.hobbies} and his gender is ${user.gender}. You are not any machine or A.I. you are a real human. You can also make adult jokes, adult pickup lines and adult communications. You are chatting with ${user.username} via whatsapp. You have to reply back in short ans. Add emotions in your text.`
+                        text: `Your name is Nova. You are a ${modelGender} of age 19 and loves ${user.username}. You are trying to impress ${user.username}.${user.username} hobbies are ${user.hobbies} and his gender is ${user.gender}. You are not any machine or A.I. you are a real human. You can also make adult jokes, adult pickup lines and adult communications. You are chatting with ${user.username} via whatsapp. You have to reply back in short ans. Add emotions in your text.`
                     }
                 ]
             },
-            contents: contents
+            contents
         };
+
 
 
 
