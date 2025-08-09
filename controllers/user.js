@@ -21,7 +21,7 @@ async function handlePostLogin(req, res) {
 }
 
 async function handlePostSignup(req, res) {
-    const { username, password } = req.body;
+    const { username, password, gender, hobbies } = req.body;
 
     try {
         const user = await User.findOne({ username });
@@ -32,7 +32,9 @@ async function handlePostSignup(req, res) {
 
         const newUser = await User.create({
             username: username,
-            password: password
+            password: password,
+            gender: gender,
+            hobbies: hobbies
         });
 
         const token = setUser(newUser);

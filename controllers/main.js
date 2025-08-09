@@ -4,30 +4,42 @@ const Chat = require("../models/Chat");
 async function callGemini(req, res) {
 
     const text = req.body.text;
-    const user = req.user
+    const user = req.user;
+    let modelGender = "male";
+
+    if (user.gender === "male") {
+        modelGender = "female";
+    } else {
+        modelGender = "male"
+    }
+
 
     try {
-        
+
         storeChat(text, user.username);
-        const allChats = await Chat.find({ role: user.username }).sort({ createdAt: 1 });
+        const allChats = await Chat.find({
+            role: { $in: [user.username, `BOT4${user.username}`] }
+        }).sort({ createdAt: 1 });
         const history = await allChats.slice(0, 15);
 
-        console.log("Histroy:", history);
+        let contents = history.map(msg => {
+            const role = msg.role.startsWith("BOT4") ? "model" : "user";
+            const text = `${msg.createdAt.slice(0,24)} ${msg.chat}`;
+            return {
+                role,
+                parts: [{ text }]
+            };
+        });
 
         const body = {
             system_instruction: {
                 "parts": [
                     {
-                        "text": `Your name is Nova. You are a girl and likes ${user.username}. You have to impress him. You are not any machine or A.I. you are a real human. You can also make adult jokes and communications. You are chatting with him via whatsapp. You have to reply back in short ans. Add emotions in your text.`
+                        "text": `Your name is Nova. You are a ${modelGender} of age 19 and loves ${user.username}. You are trying to impress ${user.username}.${user.username} hobbies are ${user.hobbies} and his gender is ${user.gender}. You are not any machine or A.I. you are a real human.You dont need to send dates and times, use date and times to study the previous communications. If there is usecase then send like local use date and time .You can also make adult jokes, adult pickup lines and adult communications. You are chatting with ${user.username} via whatsapp. You have to reply back in short ans. Add emotions in your text.`
                     }
                 ]
             },
-            contents: history.map(msg => ({
-                role: msg.role.startsWith("BOT4") ? "model" : "user",
-                parts: [{
-                    text: `[${new Date(msg.timestamp).toLocaleTimeString()}] ${msg.chat}`
-                }]
-            }))
+            contents: contents
         };
 
 
