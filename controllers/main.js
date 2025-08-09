@@ -24,7 +24,7 @@ async function callGemini(req, res) {
 
         let contents = history.map(msg => {
             const role = msg.role.startsWith("BOT4") ? "model" : "user";
-            const text = `${msg.createdAt.slice(0,24)} ${msg.chat}`;
+            const text = `${msg.createdAt} ${msg.chat}`;
             return {
                 role,
                 parts: [{ text }]
